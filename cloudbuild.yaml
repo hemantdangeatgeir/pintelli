@@ -1,6 +1,25 @@
 steps:
-- name: 'gcr.io/cloud-builders/mvn'
-  args: ['install']
+#build docker container
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '--tag=gcr.io/$PROJECT_ID/spring-boot', '.']
-images: ['gcr.io/$PROJECT_ID/spring-boot']
+  args: [ 'build', '-t', 'gcr.io/cshsandbox/hd-spring-app', '.']
+  
+#push container to container registry
+- name: 'gcr.io/cloud-builders/docker'
+  args: [ 'push', 'gcr.io/cshsandbox/hd-spring-app']
+
+#deploy to cloud run
+- name: 'gcr.io/cloud-builders/gcloud'
+  args:
+  - 'run'
+  - 'deploy'
+  - 'cloudrunservice'
+  - '--image'
+  - 'gcr.io/cshsandbox/hd-spring-app'
+  - '--region'
+  - 'us-central1'
+  - '--platform'
+  - 'managed'
+  - '--allow-unauthenticated'
+ 
+images:
+  - 'gcr.io/cshsandbox/hd-spring-app'

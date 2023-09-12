@@ -1,0 +1,6 @@
+runtime: java8
+instance_class: F1
+
+handlers:
+- url: /api/.*
+  script: this field is required, but ignored

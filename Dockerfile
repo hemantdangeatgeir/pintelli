@@ -4,4 +4,6 @@
 #EXPOSE 8080
 
 FROM openjdk:8-jdk-alpine
-ARG JAR_FILE=target/spring-boot-web.jar
+ARG JAR_FILE=~/cicddir/pintelli/target/spring-boot-web.jar
+WORKDIR ~/cicddir/pintelli/
+ENTRYPOINT ["java","-jar","spring-boot-web.jar"]
